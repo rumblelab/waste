@@ -17,8 +17,8 @@ const Navbar = () => {
           </>
         ) : (
           <>
-            <Link to="/login" className="mr-4">Login</Link>
-            <Link to="/register" className="bg-green-500 px-3 py-1 rounded hover:bg-green-600">Register</Link>
+            {/* <Link to="/login" className="mr-4">Login</Link>
+            <Link to="/register" className="bg-green-500 px-3 py-1 rounded hover:bg-green-600">Register</Link> */}
           </>
         )}
       </div>

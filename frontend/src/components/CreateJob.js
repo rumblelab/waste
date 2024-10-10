@@ -34,7 +34,7 @@ const CreateJob = ({ onJobCreated }) => {
   };
 
   return (
-    <div className="bg-white p-4 rounded shadow-md mb-6">
+    <div className="bg-white p-4 rounded mb-6">
       <h3 className="text-xl mb-4">Create New Dispatch Job</h3>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>

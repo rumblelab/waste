@@ -7,10 +7,9 @@ import CreateJob from '../components/CreateJob';
 import { toast } from 'react-toastify'; // For notifications
 
 const Dashboard = () => {
-  const { logout } = useContext(AuthContext);
-  const navigate = useNavigate();
   const [dispatchJobs, setDispatchJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false); // New state to manage modal visibility
 
   // Fetch dispatch jobs on mount
   useEffect(() => {
@@ -27,12 +26,6 @@ const Dashboard = () => {
     };
     fetchJobs();
   }, []);
-
-  // Handle logout
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
 
   // Handle delete job
   const handleDelete = async (id) => {
@@ -64,6 +57,7 @@ const Dashboard = () => {
   const handleJobCreated = (newJob) => {
     setDispatchJobs(prevJobs => [...prevJobs, newJob]);
     toast.success('New dispatch job created successfully!');
+    setIsModalOpen(false); // Close modal after job creation
   };
 
   return (
@@ -71,14 +65,27 @@ const Dashboard = () => {
       <header className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-semibold">Dashboard</h2>
         <button 
-          onClick={handleLogout} 
-          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+          onClick={() => setIsModalOpen(true)} // Open modal on click
+          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-red-600"
         >
-          Logout
+          Create New Job
         </button>
       </header>
 
-      <CreateJob onJobCreated={handleJobCreated} />
+      {/* Modal for CreateJob */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="relative bg-white p-6 rounded shadow-lg w-3/4 md:w-1/2">
+            <button 
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+              onClick={() => setIsModalOpen(false)}
+            >
+              &times;
+            </button>
+            <CreateJob onJobCreated={handleJobCreated} />
+          </div>
+          </div>
+      )}
 
       {loading ? (
         <div className="flex justify-center items-center">
